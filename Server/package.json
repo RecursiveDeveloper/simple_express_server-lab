@@ -1,11 +1,10 @@
 {
-  "name": "todoserver",
+  "name": "express_server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -13,12 +12,9 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.0",
-    "ejs": "^3.1.8"
-  },
-  "devDependencies": {
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "mysql2": "^3.2.0",
-    "nodemon": "^2.0.22"
+    "dotenv": "^17.4.2",
+    "ejs": "^3.1.8",
+    "express": "^5.2.1",
+    "mysql2": "^3.2.0"
   }
 }

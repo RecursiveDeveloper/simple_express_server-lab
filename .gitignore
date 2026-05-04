@@ -6,6 +6,4 @@
 
 terraform*
 
-env.sh
-*.env*
-env/
+*.env

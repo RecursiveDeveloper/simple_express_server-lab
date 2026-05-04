@@ -1,20 +1,12 @@
-version: '3.8'
-
-volumes:
-  mysql_data:
-    name: ${DB_VOLUME_NAME}
-    
 services:
-  mysql_server:
+  mysql_db:
     build: 
       context: .
-      dockerfile: dockerfile_DB
+      dockerfile: dockerfile_db
     container_name: ${DB_CONTAINER_NAME}
     restart: unless-stopped
     volumes:
       - mysql_data:/var/lib/mysql
-    ports:
-      - ${DB_LOCAL_PORT}:3306
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_PASS}
     healthcheck:
@@ -24,19 +16,23 @@ services:
       
   express_server:
     depends_on:
-      mysql_server:
+      mysql_db:
         condition: service_healthy
     build: 
-      context: ../../Server
-      dockerfile: ../Docker/Simple_Server_App/dockerfile_EXP
-    image: ${EXP_IMAGE_NAME}:v0.1
-    container_name: ${EXP_CONTAINER_NAME}
+      context: ../server
+      dockerfile: ../local_deploy/dockerfile_server
+    image: ${SERVER_IMAGE_NAME}:v0.1
+    container_name: ${SERVER_CONTAINER_NAME}
     restart: unless-stopped
     ports:
-      - ${EXP_LOCAL_PORT}:3000
+      - ${SERVER_LOCAL_PORT}:3000
     environment:
       - DB_HOST=${DB_HOST}
       - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASS}
+      - DB_PASS=${DB_PASS}
       - DB_NAME=${DB_NAME}
       - DB_PORT=${DB_LOCAL_PORT}
+
+volumes:
+  mysql_data:
+    name: ${DB_VOLUME_NAME}
