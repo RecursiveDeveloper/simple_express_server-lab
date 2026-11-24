@@ -249,32 +249,6 @@ Versions below come from [`server/package.json`](server/package.json) and [`serv
 | body-parser | `^1.20.0` | `1.20.5` |
 | dotenv | `^17.4.2` | `17.4.2` |
 
-## Customization
-
-### Changing Tools or Area Memberships
-
-1. Update the canonical `INSERT INTO tools` records in [`database/db_setup.sql`](database/db_setup.sql).
-2. Update the relevant area `INSERT` statements. Keep exactly eight unique, valid tool references per area to preserve the current data contract and UI counts.
-3. Reuse an existing `tool_id` when a tool belongs to multiple areas instead of adding a duplicate tool name.
-4. Reset the MySQL volume as described above so the updated initialization script runs.
-
-### Adding or Renaming an Area
-
-In addition to changing the SQL schema and seed data, update `AREA_DETAILS` in [`server/controllers/index.js`](server/controllers/index.js). That object supplies both the route-validation whitelist and the labels/descriptions used by the views. Review the hardcoded area and membership summaries in [`server/views/index.ejs`](server/views/index.ejs) and [`server/views/partials/footer.ejs`](server/views/partials/footer.ejs).
-
-### Changing the Interface
-
-Edit the EJS templates in [`server/views`](server/views) and the shared stylesheet at [`server/public/styles.css`](server/public/styles.css). The Compose server image copies these files at build time, so rebuild the image after making changes.
-
-## Notes
-
-- This repository currently provides a **local Docker Compose deployment only**. It does not contain AWS, ECS, ECR, RDS, Terraform, or Kubernetes deployment resources.
-- There is no separate frontend application; Express renders the EJS interface directly.
-- The SQL setup script drops and recreates only its seven managed tables whenever it is executed. Docker's first-initialization behavior normally prevents it from rerunning against an existing volume.
-- The Compose configuration uses the MySQL `root` account for simplicity and is intended for a local lab, not production.
-- The root-level `/.env.dev` rule in `.gitignore` keeps local configuration untracked. Store real database passwords only in that local file and never force-add it to version control.
-- Rebuilding an image does not reset the database. Use the explicit volume reset workflow when seed data must change.
-
 ## Authors
 
 - [@RecursiveDeveloper](https://github.com/RecursiveDeveloper)
