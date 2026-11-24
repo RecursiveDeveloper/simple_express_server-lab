@@ -1,55 +1,23 @@
 const express = require("express");
-const app = express();
+const {
+    showTechnologyAreas,
+    showToolCatalog,
+    showToolsByArea,
+    listTechnologyAreas,
+    listTools,
+    listToolsByArea
+} = require("../controllers/index");
 
-const dotenv = require("dotenv");
-dotenv.config();
+const router = express.Router();
 
-//conexión con la base de datos
-const {connection} = require("../config.db");
+// HTML pages
+router.get("/", showTechnologyAreas);
+router.get("/catalog", showToolCatalog);
+router.get("/areas/:area", showToolsByArea);
 
-const getCarta = (request, response) => {
-    connection.query("SELECT * FROM manager", 
-    (error, results) => {
-        if(error)
-            throw error;
-        response.status(200).json(results);
-    });
-};
-//ruta
-app.route("/manager")
-.get(getCarta);
+// JSON endpoints
+router.get("/areas", listTechnologyAreas);
+router.get("/areas/:area/tools", listToolsByArea);
+router.get("/tools", listTools);
 
-const postCarta = (request, response) => {
-    const {manager_id, first_name, last_name, last_update} = request.body;
-    connection.query(
-        `INSERT INTO manager
-        (plato, descripcion, precio, disponible) 
-        VALUES 
-        (?,?,?,?) `, 
-        [manager_id, first_name, last_name, last_update],
-    (error, results) => {
-        if(error)
-            throw error;
-        response.status(201).json({"Item añadido correctamente": results.affectedRows});
-    });
-};
-//ruta
-app.route("/manager")
-.post(postCarta);
-
-
-const delCarta = (request, response) => {
-    const id = request.params.id;
-    connection.query("Delete from manager where manager_id = ?", 
-    [id],
-    (error, results) => {
-        if(error)
-            throw error;
-        response.status(201).json({"Item eliminado":results.affectedRows});
-    });
-};
-//ruta
-app.route("/manager/:id")
-.delete(delCarta);
-
-module.exports = app;
+module.exports = router;

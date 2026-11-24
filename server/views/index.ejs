@@ -1,3 +1,33 @@
-<%- include('partials/head.ejs') %>
-    <h1>Test: <%= greeting %></h1>
+<%- include('partials/head.ejs', { title: 'Technology Areas' }) %>
+    <section class="hero">
+        <p class="eyebrow">Full-stack development, organized</p>
+        <h1>Find the right tools for every technology area.</h1>
+        <p class="hero-description">
+            Explore a curated catalog spanning development, operations, mobile,
+            cloud infrastructure, and quality assurance.
+        </p>
+        <a class="button" href="#technology-areas">Explore the areas</a>
+    </section>
+
+    <section id="technology-areas" aria-labelledby="areas-title">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">Curated collections</p>
+                <h2 id="areas-title">Technology areas</h2>
+            </div>
+            <span class="summary">6 areas &middot; 8 tools each</span>
+        </div>
+
+        <div class="area-grid">
+            <% areas.forEach((area) => { %>
+                <a class="area-card" href="/areas/<%= area.id %>">
+                    <div>
+                        <h3><%= area.name %></h3>
+                        <p><%= area.description %></p>
+                    </div>
+                    <span class="card-link">Explore 8 tools <span aria-hidden="true">&rarr;</span></span>
+                </a>
+            <% }) %>
+        </div>
+    </section>
 <%- include('partials/footer.ejs') %>

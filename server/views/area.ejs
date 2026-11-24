@@ -1,0 +1,31 @@
+<%- include('partials/head.ejs', { title: area.name + ' Tools' }) %>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Technology areas</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page"><%= area.name %></span>
+    </nav>
+
+    <section class="page-heading">
+        <p class="eyebrow">Technology area</p>
+        <h1><%= area.name %> tools</h1>
+        <p><%= area.description %></p>
+        <span class="summary"><%= tools.length %> essential tools</span>
+    </section>
+
+    <section aria-labelledby="area-tools-title">
+        <h2 id="area-tools-title" class="visually-hidden"><%= area.name %> tool list</h2>
+        <ol class="tool-grid">
+            <% tools.forEach((tool) => { %>
+                <li class="tool-card">
+                    <span class="tool-number"><%= String(tool.tool_id).padStart(2, '0') %></span>
+                    <strong><%= tool.tool_name %></strong>
+                </li>
+            <% }) %>
+        </ol>
+    </section>
+
+    <p class="page-footer-link">
+        Shared tools are stored once and reused across areas.
+        <a href="/catalog">Browse the complete catalog <span aria-hidden="true">&rarr;</span></a>
+    </p>
+<%- include('partials/footer.ejs') %>

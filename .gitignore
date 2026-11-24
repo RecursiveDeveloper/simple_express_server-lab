@@ -1,9 +1,4 @@
 */node_modules
-
 .editorconfig
-
-.terraform*
-
-terraform*
-
 *.env
+/.env.dev

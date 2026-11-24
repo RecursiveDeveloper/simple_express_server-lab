@@ -1,0 +1,28 @@
+<%- include('partials/head.ejs', { title: 'Tool Catalog' }) %>
+    <section class="page-heading">
+        <p class="eyebrow">One normalized catalog</p>
+        <h1>Full-stack tool catalog</h1>
+        <p>
+            Browse every tool in the collection. Transversal tools appear once here
+            and are referenced by each technology area that uses them.
+        </p>
+        <span class="summary"><%= tools.length %> unique tools</span>
+    </section>
+
+    <section aria-labelledby="catalog-title">
+        <h2 id="catalog-title" class="visually-hidden">All tools</h2>
+        <ul class="tool-grid catalog-grid">
+            <% tools.forEach((tool) => { %>
+                <li class="tool-card">
+                    <span class="tool-number"><%= String(tool.tool_id).padStart(2, '0') %></span>
+                    <strong><%= tool.tool_name %></strong>
+                </li>
+            <% }) %>
+        </ul>
+    </section>
+
+    <p class="page-footer-link">
+        Looking for a focused collection?
+        <a href="/">Explore by technology area <span aria-hidden="true">&rarr;</span></a>
+    </p>
+<%- include('partials/footer.ejs') %>
