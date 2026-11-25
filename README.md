@@ -205,10 +205,10 @@ Enter the value configured for `DB_PASS` when prompted. Express reaches the same
 
 ### Stopping Services
 
-Stop and remove the containers and network while preserving the database volume:
+Stop and remove the containers, network, images and the database volume:
 
 ```sh
-docker compose --env-file .env.dev down
+docker compose --env-file .env.dev down -v --rmi all --volumes
 ```
 
 ## Application Components
