@@ -211,31 +211,6 @@ Stop and remove the containers and network while preserving the database volume:
 docker compose --env-file .env.dev down
 ```
 
-## Recreating and Completely Resetting the Lab
-
-Rebuild application images without deleting seeded data:
-
-```sh
-docker compose --env-file .env.dev up --build -d
-```
-
-MySQL executes files in `/docker-entrypoint-initdb.d` only when its data directory is empty. Consequently, changes to [`database/db_setup.sql`](database/db_setup.sql) are **not** applied to an existing database volume.
-
-> **Warning:** The following reset permanently deletes this lab's MySQL volume and all data in it.
-
-To recreate the database from the latest SQL script:
-
-```sh
-docker compose --env-file .env.dev down --volumes
-docker compose --env-file .env.dev up --build -d
-```
-
-To remove the containers, network, database volume, and locally built service images without immediately recreating them:
-
-```sh
-docker compose --env-file .env.dev down --volumes --rmi all
-```
-
 ## Application Components
 
 | Component | Responsibility |
